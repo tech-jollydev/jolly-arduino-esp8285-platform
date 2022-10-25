@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	<link rel="stylesheet" href="pure.css">
+	<link rel="stylesheet" href="style.css">
+	<script src="ui.js"></script>
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>Jolly Pin Control</title>
+</head>
+<body id="control-page">
+	<div id="layout" class="">
+		<div id="main">
+			<div class="header">
+				<h1 class="jl">Jolly - Pin Control</h1>
+			</div>
+			<div class="content" style="max-width: none !important;">
+			<div class="label">
+				<span>
+					* Not Available: pins 11, 12 and 13 cannot be used because they are owned by SPI communication between main micro and WiFi module
+				</span>
+			</div>
+				<div class="pure-g">
+					<div class="pure-u-1 pure-u-md-2-4">
+						<div class="card">
+							<table class="pure-table pure-table-horizontal">
+								<tbody>
+									<tr>
+										<td class="td_key">
+											<div class="container" >
+												<div class="row">
+													<div class="col-md-6 image-board">
+														<span class="digital_pin_show active" id="digital_0_pin" onclick="displaypin(this)"><span class="p">0</span></span>
+														<span class="digital_pin_show" id="digital_1_pin" onclick="displaypin(this)"><span class="p">1</span></span>
+														<span class="digital_pin_show" id="digital_2_pin" onclick="displaypin(this)"><span class="p">2</span></span>
+														<span class="digital_pin_show" id="digital_3_pin" onclick="displaypin(this)"><span class="p">3~</span></span>
+														<span class="digital_pin_show" id="digital_4_pin" onclick="displaypin(this)"><span class="p">4</span></span>
+														<span class="digital_pin_show" id="digital_5_pin" onclick="displaypin(this)"><span class="p">5~</span></span>
+														<span class="digital_pin_show" id="digital_6_pin" onclick="displaypin(this)"><span class="p">6~</span></span>
+														<span class="digital_pin_show" id="digital_7_pin" onclick="displaypin(this)"><span class="p">7</span></span>
+														<span class="digital_pin_show" id="digital_8_pin" onclick="displaypin(this)"><span class="p">8</span></span>
+														<span class="digital_pin_show" id="digital_9_pin" onclick="displaypin(this)"><span class="p">9~</span></span>
+														<span class="digital_pin_show" id="digital_10_pin" onclick="displaypin(this)"><span class="p">10~</span></span>
+														<span class="digital_pin_show" id="digital_11_pin"><span class="p">*NA</span></span>
+														<span class="digital_pin_show" id="digital_12_pin"><span class="p">*NA</span></span>
+														<span class="digital_pin_show" id="digital_13_pin"><span class="p">*NA</span></span>
+														<img src="img/Jolly-Arduino_500px.png" style="width: inherit;">
+														<span class="analog_pin_show active" id="analog_a0_pin" onclick="displaypin(this)"><span class="p">A0</span></span>
+														<span class="analog_pin_show" id="analog_a1_pin" onclick="displaypin(this)"><span class="p">A1</span></span>
+														<span class="analog_pin_show" id="analog_a2_pin" onclick="displaypin(this)"><span class="p">A2</span></span>
+														<span class="analog_pin_show" id="analog_a3_pin" onclick="displaypin(this)"><span class="p">A3</span></span>
+														<span class="analog_pin_show" id="analog_a4_pin" onclick="displaypin(this)"><span class="p">A4</span></span>
+														<span class="analog_pin_show" id="analog_a5_pin" onclick="displaypin(this)"><span class="p">A5</span></span>
+														
+													</div>
+												</div>
+											</div> 
+										</td>
+									</tr>
+								</tbody>
+							</table>
+						</div>
+					</div>
+					<div class="pure-u-1 pure-u-md-1-4">
+						<div class="pin_block_container" id="pin_0_block">
+							<div class="pin_block">
+								<div class="pin_label">Digital pin 0</div>
+								<div class="input-row" >
+									<div class="floatleft"><input type="radio" name="digit_0" value="IN" id="digit_0_in" class="el_click digit_radio" onclick="onckl(this)" checked><label for="digit_0_in"><div>In</div><span></span></label></div>
+									<div class="floatright"><input type="radio" name="digit_0" value="OUT" id="digit_0_out" class="el_click digit_radio"  onclick="onckl(this)" ><label for="digit_0_out"><div>Out</div><span></span></label></div>
+								</div>
+								<div class="button-row" id="digit_0_span">
+									<div class="btnchk"><button id="digital_0_but_check" onclick="onckl(this)" class=" el_click but_check pure-button button-primary">Check</button></div><div  class="sp_val">Result:<span id="digital_0_value"  class="sp_val floatright"></span></div>
+								</div>
+							</div>
+						</div>
+						<div class="pin_block_container pin-hidden" id="pin_1_block"  >
+							<div class="pin_block">
+								<div class="pin_label">Digital pin 1</div>
+								<div class="input-row" >
+									<div class="floatleft"><input type="radio" name="digit_1" value="IN" id="digit_1_in" class="el_click digit_radio" onclick="onckl(this)" checked><label for="digit_1_in"><div>In</div><span></span></label></div>
+									<div class="floatright"><input type="radio" name="digit_1" value="OUT" id="digit_1_out" class="el_click digit_radio"  onclick="onckl(this)" ><label for="digit_1_out"><div>Out</div><span></span></label></div>
+								</div>
+								<div class="button-row" id="digit_1_span">
+									<div class="btnchk"><button id="digital_1_but_check" onclick="onckl(this)" class=" el_click but_check pure-button button-primary">Check</button></div><div  class="sp_val">Result:<span id="digital_1_value"  class="sp_val floatright"></span></div>
+								</div>
+							</div>
+						</div>
+						<div class="pin_block_container pin-hidden" id="pin_2_block" >
+							<div class="pin_block" >
+								<div class="pin_label">Digital pin 2</div>
+								<div class="input-row">
+									<div class="floatleft"><input type="radio" name="digit_2" value="IN" id="digit_2_in" class="el_click digit_radio" onclick="onckl(this)" checked><label for="digit_2_in"><div>In</div><span></span></label></div>
+									<div class="floatright"><input type="radio" name="digit_2" value="OUT" id="digit_2_out" class="el_click digit_radio"  onclick="onckl(this)" ><label for="digit_2_out"><div>Out</div><span></span></label></div>
+								</div>
+								<div class="button-row" id="digit_2_span">
+									<div class="btnchk"><button id="digital_2_but_check" onclick="onckl(this)" class=" el_click but_check pure-button button-primary">Check</button></div><div  class="sp_val">Result:<span id="digital_2_value"  class="sp_val floatright"></span></div>
+								</div>
+							</div>
+						</div>
+						<div class="pin_block_container pin-hidden" id="pin_3_block"  >
+							<div class="pin_block" >
+								<div class="pin_label">Digital pin 3~</div>
+								<div class="input-row">
+									<div class="floatleft"><input type="radio" name="digit_3" value="IN" id="digit_3_in" class="el_click digit_radio" onclick="onckl(this)" checked><label for="digit_3_in"><div>In</div><span></span></label></div>
+									<div class="floatright"><input type="radio" name="digit_3" value="OUT" id="digit_3_out" class="el_click digit_radio"  onclick="onckl(this)" ><label for="digit_3_out"><div>Out</div><span></span></label></div>
+								</div>
+								<div class="button-row" id="digit_3_span">
+									<div class="btnchk"><button id="digital_3_but_check" onclick="onckl(this)" class=" el_click but_check pure-button button-primary">Check</button></div><div  class="sp_val">Result:<span id="digital_3_value"  class="sp_val floatright"></span></div>
+								</div>
+							</div>
+						</div>
+						<div class="pin_block_container pin-hidden" id="pin_4_block"  >
+							<div class="pin_block" >
+								<div class="pin_label">Digital pin 4</div>
+								<div class="input-row">
+									<div class="floatleft"><input type="radio" name="digit_4" value="IN" id="digit_4_in" class="el_click digit_radio" onclick="onckl(this)" checked><label for="digit_4_in"><div>In</div><span></span></label></div>
+									<div class="floatright"><input type="radio" name="digit_4" value="OUT" id="digit_4_out" class="el_click digit_radio"  onclick="onckl(this)" ><label for="digit_4_out"><div>Out</div><span></span></label></div>
+								</div>
+								<div class="button-row" id="digit_4_span">
+									<div class="btnchk"><button id="digital_4_but_check" onclick="onckl(this)" class=" el_click but_check pure-button button-primary">Check</button></div><div  class="sp_val">Result:<span id="digital_4_value"  class="sp_val floatright"></span></div>
+								</div>
+							</div>
+						</div>
+						<div class="pin_block_container pin-hidden" id="pin_5_block"  >
+							<div class="pin_block" >
+								<div class="pin_label">Digital pin 5~</div>
+								<div class="input-row">
+									<div class="floatleft"><input type="radio" name="digit_5" value="IN" id="digit_5_in" class="el_click digit_radio" onclick="onckl(this)" checked><label for="digit_5_in"><div>In</div><span></span></label></div>
+									<div class="floatright"><input type="radio" name="digit_5" value="OUT" id="digit_5_out" class="el_click digit_radio"  onclick="onckl(this)" ><label for="digit_5_out"><div>Out</div><span></span></label></div>
+								</div>
+								<div class="button-row" id="digit_5_span">
+									<div class="btnchk"><button id="digital_5_but_check" onclick="onckl(this)" class=" el_click but_check pure-button button-primary">Check</button></div><div  class="sp_val">Result:<span id="digital_5_value"  class="sp_val floatright"></span></div>
+								</div>
+							</div>
+						</div>
+						<div class="pin_block_container pin-hidden" id="pin_6_block"  >
+							<div class="pin_block" >
+								<div class="pin_label">Digital pin 6~</div>
+								<div class="input-row">
+									<div class="floatleft"><input type="radio" name="digit_6" value="IN" id="digit_6_in" class="el_click digit_radio" onclick="onckl(this)" checked><label for="digit_6_in"><div>In</div><span></span></label></div>
+									<div class="floatright"><input type="radio" name="digit_6" value="OUT" id="digit_6_out" class="el_click digit_radio"  onclick="onckl(this)" ><label for="digit_6_out"><div>Out</div><span></span></label></div>
+								</div>
+								<div class="button-row" id="digit_6_span">
+									<div class="btnchk"><button id="digital_6_but_check" onclick="onckl(this)" class=" el_click but_check pure-button button-primary">Check</button></div><div  class="sp_val">Result:<span id="digital_6_value"  class="sp_val floatright"></span></div>
+								</div>
+							</div>
+						</div>
+						<div class="pin_block_container pin-hidden" id="pin_7_block"  >
+							<div class="pin_block" >
+								<div class="pin_label">Digital pin 7</div>
+								<div class="input-row">
+									<div class="floatleft"><input type="radio" name="digit_7" value="IN" id="digit_7_in" class="el_click digit_radio" onclick="onckl(this)" checked><label for="digit_7_in"><div>In</div><span></span></label></div>
+									<div class="floatright"><input type="radio" name="digit_7" value="OUT" id="digit_7_out" class="el_click digit_radio"  onclick="onckl(this)" ><label for="digit_7_out"><div>Out</div><span></span></label></div>
+								</div>
+								<div class="button-row" id="digit_7_span">
+									<div class="btnchk"><button id="digital_7_but_check" onclick="onckl(this)" class=" el_click but_check pure-button button-primary">Check</button></div><div  class="sp_val">Result:<span id="digital_7_value"  class="sp_val floatright"></span></div>
+								</div>
+							</div>
+						</div>
+						<div class="pin_block_container pin-hidden" id="pin_8_block"  >
+							<div class="pin_block" >
+								<div class="pin_label">Digital pin 8</div>
+								<div class="input-row">
+									<div class="floatleft"><input type="radio" name="digit_8" value="IN" id="digit_8_in" class="el_click digit_radio" onclick="onckl(this)" checked><label for="digit_8_in"><div>In</div><span></span></label></div>
+									<div class="floatright"><input type="radio" name="digit_8" value="OUT" id="digit_8_out" class="el_click digit_radio"  onclick="onckl(this)" ><label for="digit_8_out"><div>Out</div><span></span></label></div>
+								</div>
+								<div class="button-row" id="digit_8_span">
+									<div class="btnchk"><button id="digital_8_but_check" onclick="onckl(this)" class=" el_click but_check pure-button button-primary">Check</button></div><div  class="sp_val">Result:<span id="digital_8_value"  class="sp_val floatright"></span></div>
+								</div>
+							</div>
+						</div>
+						<div class="pin_block_container pin-hidden" id="pin_9_block"  >
+							<div class="pin_block" >
+								<div class="pin_label">Digital pin 9~</div>
+								<div class="input-row">
+									<div class="floatleft"><input type="radio" name="digit_9" value="IN" id="digit_9_in" class="el_click digit_radio" onclick="onckl(this)" checked><label for="digit_9_in"><div>In</div><span></span></label></div>
+									<div class="floatright"><input type="radio" name="digit_9" value="OUT" id="digit_9_out" class="el_click digit_radio"  onclick="onckl(this)" ><label for="digit_9_out"><div>Out</div><span></span></label></div>
+
+								</div>
+								<div class="button-row" id="digit_9_span">
+									<div class="btnchk"><button id="digital_9_but_check" onclick="onckl(this)" class=" el_click but_check pure-button button-primary">Check</button></div><div  class="sp_val">Result:<span id="digital_9_value"  class="sp_val floatright"></span></div>
+								</div>
+							</div>
+						</div>
+						<div class="pin_block_container pin-hidden" id="pin_10_block"  >
+							<div class="pin_block" >
+								<div class="pin_label">Digital pin 10~</div>
+								<div class="input-row">
+									<div class="floatleft"><input type="radio" name="digit_10" value="IN" id="digit_10_in" class="el_click digit_radio" onclick="onckl(this)" checked><label for="digit_10_in"><div>In</div><span></span></label></div>
+									<div class="floatright"><input type="radio" name="digit_10" value="OUT" id="digit_10_out" class="el_click digit_radio"  onclick="onckl(this)" ><label for="digit_10_out"><div>Out</div><span></span></label></div>
+
+								</div>
+								<div class="button-row" id="digit_10_span">
+									<div class="btnchk"><button id="digital_10_but_check" onclick="onckl(this)" class=" el_click but_check pure-button button-primary">Check</button></div><div  class="sp_val">Result:<span id="digital_10_value"  class="sp_val floatright"></span></div>
+								</div>
+							</div>
+						</div>
+						<div class="pin_block_container pin-hidden" id="pin_11_block"  >
+							<div class="pin_block" >
+								<div class="pin_label">Digital pin 11~</div>
+								<div class="input-row">
+									<div class="floatleft"><input type="radio" name="digit_11" value="IN" id="digit_11_in" class="el_click digit_radio" onclick="onckl(this)" checked><label for="digit_11_in"><div>In</div><span></span></label></div>
+									<div class="floatright"><input type="radio" name="digit_11" value="OUT" id="digit_11_out" class="el_click digit_radio"  onclick="onckl(this)" ><label for="digit_11_out"><div>Out</div><span></span></label></div>
+								</div>
+								<div class="button-row" id="digit_11_span">
+									<div class="btnchk"><button id="digital_11_but_check" onclick="onckl(this)" class=" el_click but_check pure-button button-primary">Check</button></div><div  class="sp_val">Result:<span id="digital_11_value"  class="sp_val floatright"></span></div>
+								</div>
+							</div>
+						</div>
+						<div class="pin_block_container pin-hidden" id="pin_12_block"  >
+							<div class="pin_block" >
+								<div class="pin_label">Digital pin 12</div>
+								<div class="input-row">
+									<div class="floatleft"><input type="radio" name="digit_12" value="IN" id="digit_12_in" class="el_click digit_radio" onclick="onckl(this)" checked><label for="digit_12_in"><div>In</div><span></span></label></div>
+									<div class="floatright"><input type="radio" name="digit_12" value="OUT" id="digit_12_out" class="el_click digit_radio"  onclick="onckl(this)" ><label for="digit_12_out"><div>Out</div><span></span></label></div>
+								</div>
+								<div class="button-row" id="digit_12_span">
+									<div class="btnchk"><button id="digital_12_but_check" onclick="onckl(this)" class=" el_click but_check pure-button button-primary">Check</button></div><div  class="sp_val">Result:<span id="digital_12_value"  class="sp_val floatright"></span></div>
+								</div>
+							</div>
+						</div>
+						<div class="pin_block_container pin-hidden" id="pin_13_block"  >
+							<div class="pin_block" >
+								<div class="pin_label">Digital pin 13</div>
+								<div class="input-row">
+									<div class="floatleft"><input type="radio" name="digit_13" value="IN" id="digit_13_in" class="el_click digit_radio" onclick="onckl(this)" checked><label for="digit_13_in"><div>In</div><span></span></label></div>
+									<div class="floatright"><input type="radio" name="digit_13" value="OUT" id="digit_13_out" class="el_click digit_radio"  onclick="onckl(this)" ><label for="digit_13_out"><div>Out</div><span></span></label></div>
+								</div>
+								<div class="button-row" id="digit_13_span">
+									<div class="btnchk"><button id="digital_13_but_check" onclick="onckl(this)" class=" el_click but_check pure-button button-primary">Check</button></div><div  class="sp_val">Result:<span id="digital_13_value"  class="sp_val floatright"></span></div>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="pure-u-1 pure-u-md-1-4 analog">
+						<div class="pin_block" id="pin_a0_block"> 
+							<div class="pin_label">Analog pin 0</div>
+							<div class="button-row" id="analog_0_span">
+								<div class="btnchk"><button id="analog_0_but" onclick="onckl(this)" class=" el_click but_check pure-button button-primary">Check</button></div><div  class="sp_val">Result:<span id="analog_0_value" class="sp_val floatright"></span></div>
+							</div>
+						</div>
+						<div class="pin_block pin-hidden" id="pin_a1_block" > 
+							<div class="pin_label">Analog pin 1</div>
+							<div class="button-row" id="analog_1_span">
+								<div class="btnchk"><button id="analog_1_but" onclick="onckl(this)" class=" el_click but_check pure-button button-primary">Check</button></div><div  class="sp_val">Result:<span id="analog_1_value" class="sp_val floatright"></span></div>
+							</div>
+						</div>
+						<div class="pin_block pin-hidden" id="pin_a2_block" > 
+							<div class="pin_label">Analog pin 2</div>
+							<div class="button-row" id="analog_2_span">
+								<div class="btnchk"><button id="analog_2_but" onclick="onckl(this)" class=" el_click but_check pure-button button-primary">Check</button></div><div  class="sp_val">Result:<span id="analog_2_value" class="sp_val floatright"></span></div>
+							</div>
+						</div>
+						<div class="pin_block pin-hidden" id="pin_a3_block" > 
+							<div class="pin_label">Analog pin 3</div>
+							<div class="button-row" id="analog_3_span">
+								<div class="btnchk"><button id="analog_3_but" onclick="onckl(this)" class=" el_click but_check pure-button button-primary">Check</button></div><div  class="sp_val">Result:<span id="analog_3_value" class="sp_val floatright"></span></div>
+							</div>
+						</div>
+						<div class="pin_block pin-hidden" id="pin_a4_block" > 
+							<div class="pin_label">Analog pin 4</div>
+							<div class="button-row" id="analog_4_span">
+								<div class="btnchk"><button id="analog_4_but" onclick="onckl(this)" class=" el_click but_check pure-button button-primary">Check</button></div><div  class="sp_val">Result:<span id="analog_4_value" class="sp_val floatright"></span></div>
+							</div>
+						</div>
+						<div class="pin_block pin-hidden" id="pin_a5_block" > 
+							<div class="pin_label">Analog pin 5</div>
+							<div class="button-row" id="analog_5_span">
+								<div class="btnchk"><button id="analog_5_but" onclick="onckl(this)" class=" el_click but_check pure-button button-primary">Check</button></div><div  class="sp_val">Result:<span id="analog_5_value" class="sp_val floatright"></span></div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</body>
+</html>

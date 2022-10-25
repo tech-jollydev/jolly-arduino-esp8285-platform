@@ -1,0 +1,128 @@
+# Copyright (c) 2022 jolly-dev SA. All right reserved.
+#
+# This library is free software; you can redistribute it and/or
+# modify it under the terms of the GNU Lesser General Public
+# License as published by the Free Software Foundation; either
+# version 2.1 of the License, or (at your option) any later version.
+#
+# This library is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+# See the GNU Lesser General Public License for more details.
+#
+# You should have received a copy of the GNU Lesser General Public
+# License along with this library; if not, write to the Free Software
+# Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
+
+
+name=jolly-dev-advanced
+version=1.0.0
+
+# Generic compile variables
+# ---------------------
+
+compiler.warning_flags=-w
+compiler.warning_flags.none=-w
+compiler.warning_flags.default=
+compiler.warning_flags.more=-Wall
+compiler.warning_flags.all=-Wall -Wextra
+
+compiler.path={runtime.tools.xtensa-lx106-elf-gcc.path}/bin/
+compiler.c.cmd=xtensa-lx106-elf-gcc
+compiler.c.flags=-c {compiler.warning_flags} -Os -g -Wpointer-arith -Wno-implicit-function-declaration -Wl,-EL -fno-inline-functions -nostdlib -mlongcalls -mtext-section-literals -falign-functions=4 -MMD -std=gnu99 -ffunction-sections -fdata-sections {build.exception_flags} {build.sslflags} -D{build.sdk}=1
+compiler.c.elf.flags=-g {compiler.warning_flags} -Os -nostdlib -Wl,--no-check-sections -u app_entry {build.float} -Wl,-static "-L{compiler.sdk.path}/lib" "-L{compiler.sdk.path}/lib/{build.sdk}" "-L{compiler.sdk.path}/ld" "-L{compiler.libc.path}/lib" "-T{build.flash_ld}" -Wl,--gc-sections -Wl,-wrap,system_restart_local -Wl,-wrap,spi_flash_read
+compiler.c.elf.cmd=xtensa-lx106-elf-gcc
+compiler.S.flags=-c -g -x assembler-with-cpp -MMD -mlongcalls -D{build.sdk}=1
+compiler.cpp.cmd=xtensa-lx106-elf-g++
+compiler.cpp.flags=-c {compiler.warning_flags} -Os -g -mlongcalls -mtext-section-literals -fno-rtti -falign-functions=4 -std=c++11 -MMD -ffunction-sections -fdata-sections {build.exception_flags} {build.sslflags} -D{build.sdk}=1
+compiler.ar.cmd=xtensa-lx106-elf-ar
+compiler.ar.flags=cru
+compiler.elf2hex.flags=
+compiler.elf2hex.cmd=esptool
+compiler.ldflags=
+compiler.size.cmd=xtensa-lx106-elf-size
+
+compiler.sdk.path={runtime.platform.path}/tools/sdk
+compiler.libc.path={runtime.platform.path}/tools/sdk/libc/xtensa-lx106-elf
+compiler.cpreprocessor.flags=-DESP8285 -D__ets__ -DICACHE_FLASH -U__STRICT_ANSI__ "-I{compiler.sdk.path}/include" "-I{compiler.sdk.path}/{build.lwip_include}" "-I{compiler.libc.path}/include" "-I{build.path}/core"
+compiler.S.cmd=xtensa-lx106-elf-gcc
+compiler.c.elf.libs=-lhal -lphy -lpp -lnet80211 {build.lwip_lib} -lwpa -lcrypto -lmain -lwps -lbearssl -laxtls -lespnow -lsmartconfig -lairkiss -lwpa2 {build.stdcpp_lib} -lm -lc -lgcc
+compiler.as.cmd=xtensa-lx106-elf-as
+
+# This can be overridden in boards.txt
+build.extra_flags=
+
+# These can be overridden in platform.local.txt
+compiler.c.extra_flags=
+compiler.c.elf.extra_flags=
+compiler.S.extra_flags=
+compiler.cpp.extra_flags=
+compiler.ar.extra_flags=
+compiler.objcopy.eep.extra_flags=
+compiler.elf2hex.extra_flags=
+
+# AVR compile patterns
+# --------------------
+
+## Build the app.ld linker file
+recipe.hooks.linking.prelink.pattern="{compiler.path}{compiler.c.cmd}" -CC -E -P {build.vtable_flags} "{runtime.platform.path}/tools/sdk/ld/eagle.app.v6.common.ld.h" -o "{build.path}/local.eagle.app.v6.common.ld"
+
+## Compile c files
+recipe.c.o.pattern="{compiler.path}{compiler.c.cmd}" {compiler.cpreprocessor.flags} {compiler.c.flags} -DF_CPU={build.f_cpu} -DARDUINO={runtime.ide.version} -DARDUINO_{build.board} -DARDUINO_ARCH_{build.arch} -D{build.board} {build.lwip_flags} {build.led} {build.flash_flags} {compiler.c.extra_flags} {build.extra_flags} {includes} "{source_file}" -o "{object_file}"
+
+## Compile c++ files
+recipe.cpp.o.pattern="{compiler.path}{compiler.cpp.cmd}" {compiler.cpreprocessor.flags} {compiler.cpp.flags} -DF_CPU={build.f_cpu} -DARDUINO={runtime.ide.version} -DARDUINO_{build.board} -DARDUINO_ARCH_{build.arch} -D{build.board} {build.lwip_flags} {build.led} {build.flash_flags} {compiler.cpp.extra_flags} {build.extra_flags} {includes} "{source_file}" -o "{object_file}"
+
+## Compile S files
+recipe.S.o.pattern="{compiler.path}{compiler.c.cmd}" {compiler.cpreprocessor.flags} {compiler.S.flags} -DF_CPU={build.f_cpu} -DARDUINO={runtime.ide.version} -DARDUINO_{build.board} -DARDUINO_ARCH_{build.arch} -D{build.board} {build.lwip_flags} {build.led} {build.flash_flags} {compiler.S.extra_flags} {build.extra_flags} {includes} "{source_file}" -o "{object_file}"
+
+## Create archives
+# archive_file_path is needed for backwards compatibility with IDE 1.6.5 or older, IDE 1.6.6 or newer overrides this value
+archive_file_path={build.path}/{archive_file}
+recipe.ar.pattern="{compiler.path}{compiler.ar.cmd}" {compiler.ar.flags} {compiler.ar.extra_flags} "{archive_file_path}" "{object_file}"
+
+## Combine gc-sections, archives, and objects
+recipe.c.combine.pattern="{compiler.path}{compiler.c.elf.cmd}" {build.exception_flags} -Wl,-Map "-Wl,{build.path}/{build.project_name}.map" {compiler.c.elf.flags} {compiler.c.elf.extra_flags} -o "{build.path}/{build.project_name}.elf" -Wl,--start-group {object_files} "{archive_file_path}" {compiler.c.elf.libs} -Wl,--end-group  "-L{build.path}"
+
+## Create output files (.eep and .hex)
+recipe.objcopy.eep.pattern={compiler.path}xtensa-lx106-elf-objcopy -h
+recipe.objcopy.hex.pattern="{runtime.tools.python3.path}/python3" "{build.runtime.tools.elf2bin}" --eboot "{build.runtime.tools.eboot}" --app "{build.path}/{build.project_name}.elf" --flash_mode {build.flash_mode} --flash_freq {build.flash_freq} --flash_size {build.flash_size} --path "{runtime.tools.xtensa-lx106-elf-gcc.path}/bin" --out "{build.path}/{build.project_name}.bin"
+
+## Save hex
+recipe.output.tmp_file={build.project_name}.bin
+recipe.output.save_file={build.project_name}.{build.variant}.bin
+
+## Compute size
+recipe.size.pattern="{compiler.path}{compiler.size.cmd}" -A "{build.path}/{build.project_name}.elf"
+recipe.size.regex=^(?:\.irom0\.text|\.text|\.text1|\.data|\.rodata|)\s+([0-9]+).*
+recipe.size.regex.data=^(?:\.data|\.rodata|\.bss)\s+([0-9]+).*
+recipe.size.regex.eeprom=^(?:\.eeprom)\s+([0-9]+).*
+
+## Preprocessor
+#preproc.includes.flags={build.preproc.includes.flags}
+#recipe.preproc.includes="{compiler.path}{compiler.cpp.cmd}" {compiler.cpp.flags} {preproc.includes.flags} -mmcu={build.mcu} -DF_CPU={build.f_cpu} -DARDUINO={runtime.ide.version} -DARDUINO_{build.board} -DARDUINO_ARCH_{build.arch} {compiler.cpp.extra_flags} {build.extra_flags} {includes} "{source_file}"
+
+#preproc.macros.flags={build.preproc.macros.flags}
+#recipe.preproc.macros="{compiler.path}{compiler.cpp.cmd}" {compiler.cpp.flags} {preproc.macros.flags} -mmcu={build.mcu} -DF_CPU={build.f_cpu} -DARDUINO={runtime.ide.version} -DARDUINO_{build.board} -DARDUINO_ARCH_{build.arch} {compiler.cpp.extra_flags} {build.extra_flags} {includes} "{source_file}" -o "{preprocessed_file_path}"
+
+
+# ESP Uploader/Programmers tools
+# ------------------------------
+
+tools.esptool_py.path={runtime.tools.esptool_py.path}
+tools.esptool_py.cmd=esptool
+tools.esptool_py.cmd.linux=esptool.py
+tools.esptool_py.cmd.windows=esptool.exe
+tools.esptool_py.upload.pattern="{path}/{cmd}" --port "{serial.port}" --chip esp8266 --baud 115200 --before no_reset --after soft_reset write_flash -fm dout  --flash_size keep 0x0 "{build.path}/{build.project_name}.bin"
+tools.esptool_py.upload.pattern.linux=python3 "{path}/{cmd}" --port "{serial.port}" --chip esp8266 --baud 115200 --before no_reset --after soft_reset write_flash -fm dout --flash_size keep 0x0 "{build.path}/{build.project_name}.bin"
+tools.esptool_py.upload.params.verbose=
+tools.esptool_py.upload.params.quiet=
+tools.esptool_py.upload.protocol=serial
+tools.esptool_py.erase.params.verbose=
+tools.esptool_py.erase.params.quiet=
+tools.esptool_py.erase.pattern=
+
+
+tools.mkspiffs.cmd=mkspiffs
+tools.mkspiffs.cmd.windows=mkspiffs.exe
+tools.mkspiffs.path={runtime.tools.mkspiffs.path}

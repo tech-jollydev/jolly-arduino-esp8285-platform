@@ -1,0 +1,79 @@
+# Copyright (c) 2022 jolly-dev SA. All right reserved.
+#
+# This library is free software; you can redistribute it and/or
+# modify it under the terms of the GNU Lesser General Public
+# License as published by the Free Software Foundation; either
+# version 2.1 of the License, or (at your option) any later version.
+#
+# This library is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+# See the GNU Lesser General Public License for more details.
+#
+# You should have received a copy of the GNU Lesser General Public
+# License along with this library; if not, write to the Free Software
+# Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
+
+
+jollyesp.name=Jolly-esp8285
+jollyesp.build.board=JollyEsp8285
+
+#--------------------------------------------------------------------------------------#
+#                                       jollyesp.menu.mcu.esp
+#--------------------------------------------------------------------------------------#
+
+jollyesp.build.variant=esp8285
+jollyesp.upload.tool=esptool_py
+jollyesp.upload.maximum_data_size=81920
+jollyesp.upload.wait_for_upload_port=true
+jollyesp.upload.erase_cmd=version
+jollyesp.build.mcu=esp8266
+jollyesp.build.core=esp8266
+jollyesp.build.spiffs_pagesize=256
+jollyesp.build.debug_port=
+jollyesp.build.debug_level=
+jollyesp.build.f_cpu=80000000L
+jollyesp.build.vtable_flags=-DVTABLES_IN_FLASH
+jollyesp.exception.build.exception_flags=-fno-exceptions
+jollyesp.ResetMethod=ck
+jollyesp.ResetMethod.ck.upload.resetmethod=ck
+jollyesp.build.extra_flags=-DF_CRYSTAL=26000000 -DESP8266
+jollyesp.build.flash_mode=dout
+jollyesp.build.flash_flags=-DFLASHMODE_DOUT
+jollyesp.build.flash_freq=40
+jollyesp.build.flash_size=1M
+jollyesp.build.flash_size_bytes=0x100000
+jollyesp.build.flash_ld=eagle.flash.1m192.ld
+jollyesp.build.spiffs_pagesize=256
+jollyesp.upload.maximum_size=827376
+jollyesp.build.rfcal_addr=0xFC000
+jollyesp.build.led=-DLED_BUILTIN=9
+jollyesp.build.lwip_include=lwip2/include
+jollyesp.build.lwip_lib=-llwip2-536-feat
+jollyesp.build.lwip_flags=-DLWIP_OPEN_SRC -DTCP_MSS=536 -DLWIP_FEATURES=1 -DLWIP_IPV6=0
+jollyesp.build.debug_port=
+jollyesp.build.debug_level=
+
+
+# definizioni per la compilazione
+jollyesp.build.lwip_lib=-llwip_gcc
+jollyesp.build.lwip_include=lwip/include
+jollyesp.build.lwip_flags=-DLWIP_OPEN_SRC
+
+jollyesp.build.vtable_flags=-DVTABLES_IN_FLASH
+
+jollyesp.build.sslflags=
+
+jollyesp.build.exception_flags=-fno-exceptions
+jollyesp.build.stdcpp_lib=-lstdc++
+
+jollyesp.build.float=-u _printf_float -u _scanf_float
+jollyesp.build.sdk=NONOSDK221
+
+jollyesp.build.runtime.tools.signing={runtime.platform.path}/tools/signing.py
+jollyesp.build.runtime.tools.elf2bin={runtime.platform.path}/tools/elf2bin.py
+jollyesp.build.runtime.tools.makecorever={runtime.platform.path}/tools/makecorever.py
+jollyesp.build.runtime.tools.eboot={runtime.platform.path}/bootloaders/eboot/eboot.elf
+
+# added for compatibility with AVR
+jollyesp.build.compiler.objcopy.eep.flags=
